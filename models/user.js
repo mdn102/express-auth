@@ -47,12 +47,22 @@ module.exports = function(sequelize, DataTypes) {
             
         }
     });
+    
     user.associate = function(models) {
         // TODO: any user association you want 
     }
-}   
 
-//  take inputed password and compare to hashed password in user table
-//  remove password setup before add
-//  return user model
-//  has new password to add to user table
+    // validPassword definition to validate password at user login 
+    user.prototype.validPassword = function(password) {
+        return bcrypt.compareSync(passwordTyped, this.password);
+    }
+
+    //  remove password before any serialization of User object
+    user.prototype.toJSON = function() {
+        let userData = this.get();
+        delete userData.password;
+        return userData;
+    }
+
+    return user;
+};   
