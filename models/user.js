@@ -40,14 +40,11 @@ module.exports = function(sequelize, DataTypes) {
                 if (createdUser & createdUser.password) {
                     let hash = bcrypt.hashSync(createdUser.password, 12);
                     createdUser.password = hash;
-                }
-                
-            }
-                
-            
+                }   
+            }           
         }
     });
-    
+
     user.associate = function(models) {
         // TODO: any user association you want 
     }
@@ -66,3 +63,4 @@ module.exports = function(sequelize, DataTypes) {
 
     return user;
 };   
+
