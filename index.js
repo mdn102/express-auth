@@ -7,8 +7,8 @@ const session = require("express-session");
 const flash = require('flash');
 const passport = require('./config/ppConfig');
 const db = require('./models');
-//  add link to customer middleware for isLoggedIn
-const SequelizeStore = require("connect-session-sequelie")(session.Store)
+const isLoggedIn = require('./middleware/isLoggedIn');
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 //  app setup 
 const app = Express();
@@ -52,12 +52,16 @@ app.get('/', function(req,res) {
     res.render('index');
 })
 
+app.get('/profile', isLoggedIn, function(req, res) {
+    res.render('profile');
+})
+
 //  include auth controller
 app.use('/auth', require('./controllers/auth'));
 
 
 // initialize App on Port
 app.listen(process.env.PORT || 3000, function(port) {
-    console.log(`Listening to the smooth sweet sounds of port ${process.env.PORT} in the morning 🧇`);
+    console.log(`Listening to the smooth sweet sounds of port ${process.env.PORT} in the morning 👻`);
 })
 
