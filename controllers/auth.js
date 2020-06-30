@@ -21,9 +21,12 @@ router.post('/register', function(req, res) {
         } 
     }).then(function([user, created]) {
         if (created) {
-            //  authenticate user and start authorization process
             console.log('User created 🌟');
-            res.redirect('/');
+            passport.authenticate('local', {
+                successRedirect: '/',
+                successFlash: 'Thanks for signing up!'
+            })(req, res);
+            res.redirect('/profile');
         } else {
             console.log('User email already exists 🖐');
             res.flash('error', 'Error: email already exists. Try a different other.');
@@ -54,7 +57,8 @@ router.post('/login', function(req, res, next) {
         if (error) {
             return next(error);
         }
-        req.login(function(user, error) {
+
+        req.login(user, function(error) {
             //  if error move to error
             if (error) next(error);
             //  if success flash success message
@@ -64,7 +68,7 @@ router.post('/login', function(req, res, next) {
                 return res.redirect('/');
             })
         })
-    })
+    })(req, res, next);
 })
 
 router.post('/login', passport.authenticate('local', {

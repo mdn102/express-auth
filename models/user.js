@@ -1,5 +1,4 @@
 //  user model decleration
-//  define use case 
 'use strict';
 const bcrypt = require('bcrypt');
 
@@ -44,13 +43,12 @@ module.exports = function(sequelize, DataTypes) {
             }           
         }
     });
-
     user.associate = function(models) {
         // TODO: any user association you want 
     }
 
     // validPassword definition to validate password at user login 
-    user.prototype.validPassword = function(password) {
+    user.prototype.validPassword = function(passwordTyped) {
         return bcrypt.compareSync(passwordTyped, this.password);
     }
 
