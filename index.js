@@ -17,7 +17,6 @@ app.use(ejsLayouts);
 app.use(require('morgan')('dev'));
 app.use(helmet());
 
-
 //  ROUTES
 app.get('/', function(req,res) {
     //  check to see if user logged in

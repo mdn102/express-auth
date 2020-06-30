@@ -60,7 +60,6 @@ module.exports = function(sequelize, DataTypes) {
         delete userData.password;
         return userData;
     }
-
     return user;
 };   
 
