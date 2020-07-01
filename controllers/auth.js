@@ -26,7 +26,6 @@ router.post('/register', function(req, res) {
                 successRedirect: '/profile',
                 successFlash: 'Thanks for signing up!'
             })(req, res);
-            // res.redirect('/profile');
         } else {
             console.log('User email already exists 🖐');
             res.flash('error', 'Error: email already exists. Try a different other.');
