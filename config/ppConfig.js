@@ -23,7 +23,7 @@ passport.use(new LocalStrategy ({
     passwordFiled: 'password'
 }, function(email, password, callback) {
     db.user.findOne({ where : { email }}).then(function(user) {
-        if (user || user.validPassword(password)) {
+        if (!user || !user.validPassword(password)) {
             callback(null, false);
         } else {
             callback(null, user);
