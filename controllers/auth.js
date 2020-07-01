@@ -23,10 +23,10 @@ router.post('/register', function(req, res) {
         if (created) {
             console.log('User created 🌟');
             passport.authenticate('local', {
-                successRedirect: '/',
+                successRedirect: '/profile',
                 successFlash: 'Thanks for signing up!'
             })(req, res);
-            res.redirect('/profile');
+            // res.redirect('/profile');
         } else {
             console.log('User email already exists 🖐');
             res.flash('error', 'Error: email already exists. Try a different other.');
