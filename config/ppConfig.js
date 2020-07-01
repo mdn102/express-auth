@@ -6,12 +6,9 @@ const db = require('../models');
 // serialize user
 passport.serializeUser(function(user, callback) {
     //  there is serialization issue
+    console.log(user);
     callback(null, user.id);
 });
-// passport.serializeUser(function(user, done) {
-//     done(null, user);
-//   });
-  
   
 //  deserialized version 
 passport.deserializeUser(function(id, callback) {
@@ -19,9 +16,6 @@ passport.deserializeUser(function(id, callback) {
         callback(null, user);
     }).catch(callback);
 }) 
-// passport.deserializeUser(function(user, done) {
-//     done(null, user);
-//   });
 
 //  config local variables/settings
 passport.use(new LocalStrategy ({

@@ -56,10 +56,10 @@ router.post('/login', function(req, res, next) {
         if (error) {
             return next(error);
         }
-
+        // there is an issue in line 60
         req.login(user, function(error) {
             //  if error move to error
-            if (error) next(error);
+            if (error) { return next(error); }
             //  if success flash success message
             req.flash('success', 'You are validate and logged in.');
             //  if success save session and redirect user
