@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 // import middleware
-const flash = require('flash');
+const flash = require('connect-flash');
 const passport = require('../config/ppConfig');
 
 //  register get route
@@ -69,6 +69,8 @@ router.post('/login', function(req, res, next) {
         })
     })(req, res, next);
 });
+
+// THIS IS THE MAIN ISSUE SINCE SHOULD'T HAVE 2 LOGIN ROUTE
 
 // router.post('/login', passport.authenticate('local', {
 //     successRedirect: '/', 
