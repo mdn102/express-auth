@@ -5,9 +5,11 @@ const db = require('../models');
 
 // serialize user
 passport.serializeUser(function(user, callback) {
+    //  there is serialization issue
+    console.log(user);
     callback(null, user.id);
 });
-
+  
 //  deserialized version 
 passport.deserializeUser(function(id, callback) {
     db.user.findByPk(id).then(function(user) {

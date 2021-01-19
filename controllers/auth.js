@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 // import middleware
-const flash = require('flash');
+const flash = require('connect-flash');
 const passport = require('../config/ppConfig');
 
 //  register get route
@@ -49,33 +49,35 @@ router.post('/login', function(req, res, next) {
     passport.authenticate('local', function(error, user, info) {
         if (!user) {
             req.flash('error', 'Invalid username or password');
-            req.session.save(function() {
+            // req.session.save(function() {
+                console.log("☠️☠️☠️☠️☠️");
                 return res.redirect('/auth/login');
-            });
         }
         if (error) {
             return next(error);
         }
-
+        // there is an issue in line 60
         req.login(user, function(error) {
             //  if error move to error
-            if (error) next(error);
+            if (error) { return next(error); }
             //  if success flash success message
             req.flash('success', 'You are validate and logged in.');
             //  if success save session and redirect user
             req.session.save(function() {
-                return res.redirect('/');
-            })
+                return res.redirect('/profile');
+            });
         })
     })(req, res, next);
-})
+});
 
-router.post('/login', passport.authenticate('local', {
-    successRedirect: '/', 
-    failureRedirect: '/auth/login',
-    successFlash: 'Welcome to our app!',
-    failureFlash: 'Invalid username or password.'
-}));
+// THIS IS THE MAIN ISSUE SINCE SHOULD'T HAVE 2 LOGIN ROUTE
+
+// router.post('/login', passport.authenticate('local', {
+//     successRedirect: '/', 
+//     failureRedirect: '/auth/login',
+//     successFlash: 'Welcome to our app!',
+//     failureFlash: 'Invalid username or password.'
+// }));
 
 router.get('/logout', function(req, res) {
     req.logout();
